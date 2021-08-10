@@ -1,0 +1,1002 @@
+{
+	"info": {
+		"_postman_id": "f6fa3cc8-7935-4754-84db-137a1c5d3da1",
+		"name": "grupo3-api-jph",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "createUsers",
+					"item": [
+						{
+							"name": "create-user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"/*",
+											"var respuestaExterna;",
+											"pm.sendRequest(\"https://reqres.in/api/users/2\", function (err, response) {",
+											"     respuestaExterna = response.json();",
+											"     console.log(respuestaExterna.data.email);",
+											"});",
+											"*/",
+											"var respuesta = pm.response.json();",
+											"console.log(respuesta.id);",
+											"var userId = parseInt(respuesta.id);",
+											"var valor = parseInt(pm.variables.get(\"valor\"));",
+											"pm.collectionVariables.set(\"userId\",userId-valor);",
+											"",
+											"",
+											"var statusCode = parseInt(pm.variables.get(\"statusCode\"));",
+											"var statusDescription = pm.variables.get(\"statusDescription\");",
+											"pm.test(\"el codigo de estado es \"+statusCode,function(){",
+											"    pm.response.to.have.status(statusCode);",
+											"    pm.response.to.have.status(statusDescription);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"postman.setNextRequest(\"get-user\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{name}}\",\n    \"username\": \"{{username}}\",\n    \"email\": \"{{email}}\",\n    \"address\": {\n        \"street\": \"Kulas Light\",\n        \"suite\": \"Apt. 556\",\n        \"city\": \"Gwenborough\",\n        \"zipcode\": \"92998-3874\",\n        \"geo\": {\n            \"lat\": \"-37.3159\",\n            \"lng\": \"81.1496\"\n        }\n    },\n    \"phone\": \"1-770-736-8031 x56442\",\n    \"website\": \"hildegard.org\",\n    \"company\": {\n        \"name\": \"Romaguera-Crona\",\n        \"catchPhrase\": \"Multi-layered client-server neural-net\",\n        \"bs\": \"harness real-time e-markets\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var statusCode = parseInt(pm.variables.get(\"statusCodeGet\"));",
+											"var statusDescription = pm.variables.get(\"statusDescriptionGet\");",
+											"pm.test(\"el codigo de estado es \"+statusCode,function(){",
+											"    pm.response.to.have.status(statusCode);",
+											"    pm.response.to.have.status(statusDescription);",
+											"});",
+											"",
+											"pm.test.skip(\"el nombre del usuario es \"+pm.variables.get(\"name\"),function(){",
+											"    var valorObtenido = pm.response.json().name;",
+											"    pm.expect(valorObtenido).to.eql(pm.variables.get(\"name\"))",
+											"});",
+											"",
+											"pm.test(\"la respuesta en formato cadena es correcta\", function () {",
+											"    var respuesta = pm.response.text();",
+											"    pm.response.to.have.body(respuesta);",
+											"});",
+											"",
+											"pm.test(\"la respuesta es un objeto json\",function(){",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"required\": [",
+											"        \"id\",",
+											"        \"name\",",
+											"        \"username\",",
+											"        \"email\"",
+											"    ],",
+											"    \"properties\": {",
+											"        \"id\": {",
+											"            \"type\": \"number\"",
+											"        },",
+											"        \"name\": {",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"username\": {",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"email\": {",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"address\": {",
+											"            \"type\": \"object\",",
+											"            \"required\": [",
+											"                \"street\",",
+											"                \"suite\",",
+											"                \"city\",",
+											"                \"zipcode\",",
+											"                \"geo\"",
+											"            ],",
+											"            \"properties\": {",
+											"                \"street\": {",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"suite\": {",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"city\": {",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"zipcode\": {",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"geo\": {",
+											"                    \"type\": \"object\",",
+											"                    \"required\": [",
+											"                        \"lat\",",
+											"                        \"lng\"",
+											"                    ],",
+											"                    \"properties\": {",
+											"                        \"lat\": {",
+											"                            \"type\": \"string\"",
+											"                        },",
+											"                        \"lng\": {",
+											"                            \"type\": \"string\"",
+											"                        }",
+											"                    },",
+											"                    \"additionalProperties\":false",
+											"                }",
+											"            },",
+											"            \"additionalProperties\":false",
+											"        },",
+											"        \"phone\": {",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"website\": {",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"company\": {",
+											"            \"type\": \"object\",",
+											"            \"required\": [",
+											"                \"name\",",
+											"                \"catchPhrase\",",
+											"                \"bs\"",
+											"            ],",
+											"            \"properties\": {",
+											"                \"name\": {",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"catchPhrase\": {",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"bs\": {",
+											"                    \"type\": \"string\"",
+											"                }",
+											"            },",
+											"            \"additionalProperties\":false",
+											"        }",
+											"    },",
+											"    \"additionalProperties\":false",
+											"};",
+											"if(pm.variables.get(\"valor\")==\"1\"){",
+											"pm.test(\"la propiedad id existe\",function(){",
+											"    var respuesta = pm.response.json();",
+											"    pm.response.to.have.jsonBody(\"id\");",
+											"    pm.expect(respuesta.id).to.be.a('number');",
+											"    pm.expect(respuesta.address.street).to.be.a('string');",
+											"    pm.expect(respuesta.address.geo.latitud).to.be.undefined;",
+											"}",
+											");",
+											"",
+											"pm.test(\"el json schema de la respsuesta es correcto\",function(){",
+											"    pm.response.to.have.jsonSchema(schema);",
+											"});",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"postman.setNextRequest(null);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/{{userId}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "deleteUsers",
+					"item": [
+						{
+							"name": "create-user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Danilo\",\n    \"username\": \"daniloerj\",\n    \"email\": \"daniloerj@hotmail.com\",\n    \"address\": {\n        \"street\": \"Kulas Light\",\n        \"suite\": \"Apt. 556\",\n        \"city\": \"Gwenborough\",\n        \"zipcode\": \"92998-3874\",\n        \"geo\": {\n            \"lat\": \"-37.3159\",\n            \"lng\": \"81.1496\"\n        }\n    },\n    \"phone\": \"1-770-736-8031 x56442\",\n    \"website\": \"hildegard.org\",\n    \"company\": {\n        \"name\": \"Romaguera-Crona\",\n        \"catchPhrase\": \"Multi-layered client-server neural-net\",\n        \"bs\": \"harness real-time e-markets\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/users/10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"10"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "updateUsers",
+					"item": [
+						{
+							"name": "create-users",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Danilo\",\n    \"username\": \"daniloerj\",\n    \"email\": \"daniloerj@hotmail.com\",\n    \"address\": {\n        \"street\": \"Kulas Light\",\n        \"suite\": \"Apt. 556\",\n        \"city\": \"Gwenborough\",\n        \"zipcode\": \"92998-3874\",\n        \"geo\": {\n            \"lat\": \"-37.3159\",\n            \"lng\": \"81.1496\"\n        }\n    },\n    \"phone\": \"1-770-736-8031 x56442\",\n    \"website\": \"hildegard.org\",\n    \"company\": {\n        \"name\": \"Romaguera-Crona\",\n        \"catchPhrase\": \"Multi-layered client-server neural-net\",\n        \"bs\": \"harness real-time e-markets\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-user",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Efrain\",\n    \"username\": \"daniloerj\",\n    \"email\": \"daniloerj@hotmail.com\",\n    \"address\": {\n        \"street\": \"Kulas Light\",\n        \"suite\": \"Apt. 556\",\n        \"city\": \"Gwenborough\",\n        \"zipcode\": \"92998-3874\",\n        \"geo\": {\n            \"lat\": \"-37.3159\",\n            \"lng\": \"81.1496\"\n        }\n    },\n    \"phone\": \"1-770-736-8031 x56442\",\n    \"website\": \"hildegard.org\",\n    \"company\": {\n        \"name\": \"Romaguera-Crona\",\n        \"catchPhrase\": \"Multi-layered client-server neural-net\",\n        \"bs\": \"harness real-time e-markets\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/users/10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"users",
+										"10"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get-all-users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"function buscarUsuario(cadenaABuscar){",
+									"    //para obtener el ultimo encontrado",
+									"    /*var respuesta = pm.response.json();",
+									"    var elemento;",
+									"    for(var i=0; i<respuesta.length;i++){",
+									"        if(respuesta[i].name==cadenaABuscar){",
+									"            elemento = respuesta[i];",
+									"        }",
+									"    }*/",
+									"    // para obtener el primero que encuentre",
+									"    var respuesta = pm.response.json();",
+									"    var elemento = respuesta.find(e=>e.name == cadenaABuscar);",
+									"    return elemento;",
+									"}",
+									"",
+									"pm.test(\"validando nombre de un elemento del arreglo de usuarios\",function(){",
+									"    var elemento = buscarUsuario(\"Chelsey Dietrich\");",
+									"    pm.expect(elemento.id).to.eql(5);",
+									"    console.log(elemento);",
+									"});",
+									"pm.test(\"validando nombre de un elemento del arreglo de usuarios\",function(){",
+									"    var elemento = buscarUsuario(\"Mrs. Dennis Schulist\");",
+									"    pm.expect(elemento.id).to.eql(6);",
+									"    console.log(elemento);",
+									"});",
+									"pm.test(\"validando nombre de un elemento del arreglo de usuarios\",function(){",
+									"    var elemento = buscarUsuario(\"Kurtis Weissnat\");",
+									"    pm.expect(elemento.id).to.eql(7);",
+									"    console.log(elemento);",
+									"});",
+									"//console.info(pm.variables.replaceIn('Hola {{name}}'));",
+									"",
+									"var esquema = {",
+									"    \"type\": \"array\",",
+									"    \"additionalItems\": false,",
+									"    \"maxItems\":10,",
+									"    \"minItems\":1,",
+									"    \"items\": {",
+									"        \"anyOf\": [",
+									"            {",
+									"                \"type\": \"object\",",
+									"                \"required\": [",
+									"                    \"id\",",
+									"                    \"name\",",
+									"                    \"username\",",
+									"                    \"email\",",
+									"                    \"address\",",
+									"                    \"phone\",",
+									"                    \"website\",",
+									"                    \"company\"",
+									"                ],",
+									"                \"properties\": {",
+									"                    \"id\": {",
+									"                        \"type\": \"number\"",
+									"                    },",
+									"                    \"name\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"username\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"email\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"address\": {",
+									"                        \"type\": \"object\",",
+									"                        \"required\": [",
+									"                            \"street\",",
+									"                            \"suite\",",
+									"                            \"city\",",
+									"                            \"zipcode\",",
+									"                            \"geo\"",
+									"                        ],",
+									"                        \"properties\": {",
+									"                            \"street\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"suite\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"city\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"zipcode\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"geo\": {",
+									"                                \"type\": \"object\",",
+									"                                \"required\": [",
+									"                                    \"lat\",",
+									"                                    \"lng\"",
+									"                                ],",
+									"                                \"properties\": {",
+									"                                    \"lat\": {",
+									"                                        \"type\": \"string\"",
+									"                                    },",
+									"                                    \"lng\": {",
+									"                                        \"type\": \"string\"",
+									"                                    }",
+									"                                },",
+									"                                \"additionalProperties\": true",
+									"                            }",
+									"                        },",
+									"                        \"additionalProperties\": true",
+									"                    },",
+									"                    \"phone\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"website\": {",
+									"                        \"type\": \"string\"",
+									"                    },",
+									"                    \"company\": {",
+									"                        \"type\": \"object\",",
+									"                        \"required\": [",
+									"                            \"name\",",
+									"                            \"catchPhrase\",",
+									"                            \"bs\"",
+									"                        ],",
+									"                        \"properties\": {",
+									"                            \"name\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"catchPhrase\": {",
+									"                                \"type\": \"string\"",
+									"                            },",
+									"                            \"bs\": {",
+									"                                \"type\": \"string\"",
+									"                            }",
+									"                        },",
+									"                        \"additionalProperties\": true",
+									"                    }",
+									"                },",
+									"                \"additionalProperties\": true",
+									"            }",
+									"        ]",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"validando schema\",()=>{",
+									"    pm.response.to.have.jsonSchema(esquema);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(pm.request.method);",
+									"console.log(request.name);",
+									"console.log(request.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var variablePrueba = \"probar\";"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "posts",
+			"item": [
+				{
+					"name": "get-all-users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = ",
+									"{",
+									"  \"name\": \"Jane\",",
+									"  \"age\": 29,",
+									"  \"hobbies\": [",
+									"    \"skating\",",
+									"    \"painting\"",
+									"  ],",
+									"  \"email\": null,",
+									"  \"isFather\":true",
+									"};",
+									"",
+									"",
+									"pm.test(\"Test data type of the response\", function() {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.name).to.be.a(\"string\");",
+									"  pm.expect(jsonData.age).to.be.a(\"number\");",
+									"  pm.expect(jsonData.hobbies).to.be.an(\"array\");",
+									"  pm.expect(jsonData.website).to.be.undefined;",
+									"  pm.expect(jsonData.email).to.be.null;",
+									"  pm.expect(jsonData.isFather).to.be.a(\"boolean\");",
+									"});",
+									"",
+									"",
+									"",
+									"jsonData = ",
+									"{",
+									"  \"errors\": [],",
+									"  \"areas\": [ \"goods\", \"services\" ],",
+									"  \"settings\": [",
+									"    {",
+									"      \"type\": \"notification\",",
+									"      \"detail\": [ \"email\", \"sms\" ]",
+									"    },",
+									"    {",
+									"      \"type\": \"visual\",",
+									"      \"detail\": [ \"light\", \"large\" ]",
+									"    }",
+									"  ]",
+									"}",
+									"",
+									"",
+									"pm.test(\"Test array properties\", () => {",
+									"    //errors array is empty",
+									"  pm.expect(jsonData.errors).to.be.empty;",
+									"    //areas includes \"goods\"",
+									"  pm.expect(jsonData.areas).to.include(\"goods\");",
+									"    ",
+									"    //get the notification settings object",
+									"  const notificationSettings = jsonData.settings.find(m => m.type === \"danilo\");",
+									"",
+									"  pm.expect(notificationSettings)",
+									"    .to.be.an(\"object\", \"Could not find the setting\");",
+									"    ",
+									"    ",
+									"    //detail array should include \"sms\"",
+									"  pm.expect(notificationSettings.detail).to.include(\"sms\");",
+									"    //detail array should include all listed",
+									"  pm.expect(notificationSettings.detail)",
+									"    .to.have.members([\"email\", \"sms\"]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(request.name);",
+									"console.log(request.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"el tiempo de respuesta es menor que 5s\",function(){",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"",
+							"pm.test.skip(\"VALIDANDO RESPUESTA\",function(){",
+							"    pm.response.to.have.status(\"CREADO\");",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "comments",
+			"item": [
+				{
+					"name": "get-all-comments",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.info(\"codigo pre request de request\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.warn(\"codigo test de request\");",
+									"function replaceNull(value) {",
+									"  if(value === \"null\") {",
+									"    value = null;",
+									"  }",
+									"  return value;",
+									"}",
+									"",
+									"//var columnaNullEnCsv = pm.iterationData.get(\"columnaNullEnCsv\");",
+									"var columnaNullEnCsv = \"null\";",
+									"var object = {",
+									"    \"name\":columnaNullEnCsv,",
+									"    \"username\":columnaNullEnCsv,",
+									"    \"email\":columnaNullEnCsv",
+									"    };",
+									"console.log(object);",
+									"",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json().url);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-comment-by-id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.info(\"codigo pre request de folder\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.warn(\"codigo test de folder\");",
+							"",
+							"pm.test(\"el tiempo de respuesta es menor que 6s\",function(){",
+							"    pm.expect(pm.response.responseTime).to.be.below(6000);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "albumns",
+			"item": [
+				{
+					"name": "get-all-comments",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.info(\"codigo pre request de request\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.warn(\"codigo test de request\");",
+									"function replaceNull(value) {",
+									"  if(value === \"null\") {",
+									"    value = null;",
+									"  }",
+									"  return value;",
+									"}",
+									"",
+									"//var columnaNullEnCsv = pm.iterationData.get(\"columnaNullEnCsv\");",
+									"var columnaNullEnCsv = \"null\";",
+									"var object = {",
+									"    \"name\":columnaNullEnCsv,",
+									"    \"username\":columnaNullEnCsv,",
+									"    \"email\":columnaNullEnCsv",
+									"    };",
+									"console.log(object);",
+									"",
+									"",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+									"    console.log(response.json().url);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var responseTime = parseInt(pm.variables.get(\"responseTime\"));",
+					"var testDescription = \"el tiempo de respuesta es menor que \"+responseTime/1000+\"s\";",
+					"",
+					"pm.test(testDescription,function(){",
+					"    pm.expect(pm.response.responseTime).to.be.below(responseTime);",
+					"});",
+					"",
+					"pm.test(\"el heeader Content-Type existe\",function(){",
+					"    pm.response.to.have.header(\"Content-Type\");",
+					"});",
+					"",
+					"var headerValue = pm.variables.get(\"headerValue\");",
+					"pm.test(\"el valor del header Content-Type es \"+headerValue,function(){",
+					"    pm.response.to.have.header(\"Content-Type\",headerValue);",
+					"});",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://www.youtube.com/"
+		},
+		{
+			"key": "name",
+			"value": "Danilo Efrain"
+		},
+		{
+			"key": "lastName",
+			"value": "Ramirez Jara\n"
+		},
+		{
+			"key": "username",
+			"value": "daniloerj"
+		},
+		{
+			"key": "userId",
+			"value": "11"
+		},
+		{
+			"key": "variableid",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": "daniloerj@hotmail.com"
+		},
+		{
+			"key": "responseTime",
+			"value": "5000"
+		},
+		{
+			"key": "statusCode",
+			"value": "200"
+		},
+		{
+			"key": "statusDescription",
+			"value": "OK"
+		},
+		{
+			"key": "headerValue",
+			"value": "application/json; charset=utf-8"
+		},
+		{
+			"key": "valor",
+			"value": "1"
+		},
+		{
+			"key": "statusCodeGet",
+			"value": "200"
+		},
+		{
+			"key": "statusDescriptionGet",
+			"value": "OK"
+		}
+	]
+}

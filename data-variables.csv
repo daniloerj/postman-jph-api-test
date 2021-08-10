@@ -1,0 +1,6 @@
+valor,name,username,email,statusCode,responseTime,statusDescription,statusCodeGet,statusDescriptionGet,lastName
+1,Marco Melendez, mmelendez,adaasa@hotmail.com,201,5000,Created,200,OK,Efrain
+0,jean pierre, jpierre,adaasa@hotmail.com,201,5000,Created,404,Not Found,Efrain
+1,D32434D, daniloefranramirezsdaass,adaasa@gmail.com,201,5000,Created,200,OK,Efrain
+0,Danilo Ramirez, 123131443214,,201,5000,Created,404,Not Found,Efrain
+0,123123123121, 123131443214,daasa@gmail.com,201,5000,Created,404,Not Found,Efrain
