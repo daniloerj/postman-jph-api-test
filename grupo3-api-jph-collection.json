@@ -46,12 +46,16 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"postman.setNextRequest(\"get-user\");"
+											"//postman.setNextRequest(\"get-user\");"
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
+							"protocolProfileBehavior": {
+								"strictSSL": true,
+								"followRedirects": true
+							},
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -219,7 +223,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"postman.setNextRequest(null);"
+											"//postman.setNextRequest(null);"
 										],
 										"type": "text/javascript"
 									}
