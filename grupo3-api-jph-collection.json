@@ -46,7 +46,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"//postman.setNextRequest(\"get-user\");"
+											"postman.setNextRequest(\"get-user\");"
 										],
 										"type": "text/javascript"
 									}
@@ -223,7 +223,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"//postman.setNextRequest(null);"
+											"postman.setNextRequest(null);"
 										],
 										"type": "text/javascript"
 									}
